@@ -7,6 +7,6 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<!-- controller를 찾는다? -->
-	<context:component-scan base-package="com.mycompany.springcontainer"></context:component-scan>
+	<mvc:resources mapping="/resources/**" location="/resources/"></mvc:resources>
+
 </beans>
