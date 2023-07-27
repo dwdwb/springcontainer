@@ -25,6 +25,7 @@ public class Ch11Controller {
 		return "ch11/content";
 	}
 	
+	//기본값 세팅하는 용도
 	@GetMapping("/form1")
 	public String form1(@ModelAttribute("member") Ch11Member member) {
 		member.setMid("summer");
@@ -33,7 +34,8 @@ public class Ch11Controller {
 		member.setMnation("한국");
 		return "ch11/form1";
 	}
-
+	
+	//폼으로부터 값을 받아오는 용도
 	@PostMapping("/form1")
 	public String handleForm1(@ModelAttribute("member") Ch11Member member) {
 		log.info(member.toString());
