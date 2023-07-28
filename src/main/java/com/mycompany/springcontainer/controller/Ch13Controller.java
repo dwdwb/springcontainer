@@ -1,5 +1,7 @@
 package com.mycompany.springcontainer.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
@@ -38,19 +40,20 @@ public class Ch13Controller {
 
 	@GetMapping("/getBoardList")
 	public String getBoardList() {
-		boardDaoOld.selectAll();
+		List<Ch13Board> list = boardDaoOld.selectAll();
 		return "redirect:/ch13/content";
 	}
 
 	@GetMapping("/updateBoard")
 	public String updateBoard() {
-		boardDaoOld.updateByBno();
+		Ch13Board board = boardDaoOld.selectByBno(1);
+		boardDaoOld.updateByBno(board);
 		return "redirect:/ch13/content";
 	}
 
 	@GetMapping("/deleteBoard")
-	public String deleteBoard() {
-		boardDaoOld.deleteByBno();
+	public String deleteBoard(int bno) {
+		boardDaoOld.deleteByBno(bno);
 		return "redirect:/ch13/content";
 	}
 }

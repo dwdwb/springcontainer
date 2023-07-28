@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.springcontainer.dao.mybatis.Ch13BoardDao">
-	<insert id="insert" parameterType="com.mycompany.springcontainer.dto.Ch13Board">
+	<insert id="insert" parameterType="Board">
 		insert into board (bno, btitle, bcontent, mid, bdate, bhitcount)
 		values(seq_bno.nextval, #{btitle}, #{bcontent}, #{mid}, sysdate, 0)
 	</insert>
 	
 	<!-- 한 행을 Ch13Board 객체로 만듦 -->
-	<select id="selectAll" resultType="com.mycompany.springcontainer.dto.Ch13Board">
+	<select id="selectAll" resultType="Board">
 		select bno, btitle, bcontent, mid, bdate, bhitcount, battachoname, battachsname, battachtype, battachdata
 		from board
 	</select>
 	
-	<update id="updateByBno" parameterType="com.mycompany.springcontainer.dto.Ch13Board">
+	<select id="selectByBno" resultType="Board">
+		select bno, btitle, bcontent, mid, bdate, bhitcount, battachoname, battachsname, battachtype, battachdata
+		from board
+		where bno=#{bno}
+	</select>
+	
+	<update id="updateByBno" parameterType="Board">
 		update board
 		set btitle=#{btitle}, bcontent=#{bcontent}
 		where bno=#{bno}
