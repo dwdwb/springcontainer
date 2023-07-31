@@ -27,7 +27,8 @@
                   전자정부 프레임워크(Spring Framework)   
             </a>
             <div>
-               <div>
+            	<!-- ch08 -->
+               <%-- <div>
                    <c:if test="${login == null}">
 						<a href="${pageContext.request.contextPath}/ch08/content" class="btn btn-success btn-sm">로그인</a>
 				   </c:if>
@@ -36,6 +37,14 @@
 						<a href="${pageContext.request.contextPath}/ch08/logout" class="btn btn-danger btn-sm ml-1">로그아웃</a>
 				   </c:if>
                    <!-- <a href="#" class="btn btn-success btn-sm">로그인</a> -->
+               </div> --%>
+               <div>
+	               <c:if test="${ch13Login == null}">
+						<a href="${pageContext.request.contextPath}/ch13/content" class="btn btn-success btn-sm">로그인</a>
+				   </c:if>
+	               <c:if test="${ch13Login != null}">
+						<a href="${pageContext.request.contextPath}/ch13/logout" class="btn btn-danger btn-sm ml-1">로그아웃</a>
+				   </c:if>
                </div>
             </div>
          </nav>

@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycompany.springcontainer.dao.mybatis.Ch13BoardDao">
+<mapper namespace="com.mycompany.springcontainer.dao.Ch13BoardDao">
 	<insert id="insert" parameterType="Board">
-		insert into board (bno, btitle, bcontent, mid, bdate, bhitcount)
-		values(seq_bno.nextval, #{btitle}, #{bcontent}, #{mid}, sysdate, 0)
+		<selectKey keyProperty="bno" resultType="int" order="BEFORE">
+			select seq_bno.nextval from dual
+		</selectKey>
+		<!-- null이 들어갈 컬럼값은 반드시 jsbcType을 명시해야 함 -->
+		insert into board (
+			bno, btitle, bcontent, mid, bdate, bhitcount, 
+			battachoname, battachtype, battachsname, battachdata
+		)
+		values(
+			#{bno}, #{btitle}, #{bcontent}, #{mid}, sysdate, 0, 
+			#{battachoname, jdbcType=VARCHAR},
+			#{battachtype, jdbcType=VARCHAR},
+			#{battachsname, jdbcType=VARCHAR},
+			#{battachdata, jdbcType=BLOB}
+		)
 	</insert>
 	
-	<!-- 한 행을 Ch13Board 객체로 만듦 -->
-	<select id="selectAll" resultType="Board">
-		select bno, btitle, bcontent, mid, bdate, bhitcount, battachoname, battachsname, battachtype, battachdata
-		from board
+	<select id="selectByPage" parameterType="Pager" resultType="Board">
+		<!-- 꺽새를 태그로 인식하지 못하게 xml에서만 쓸 수 있는 문법 -->
+		<![CDATA[
+			select rnum, bno, btitle, mid, bdate, bhitcount, battachoname
+			from (
+				select rownum as rnum, bno, btitle, mid, bdate, bhitcount, battachoname
+				from (
+					select bno, btitle, mid, bdate, bhitcount, battachoname
+					from board
+					order by bno desc
+				)
+				where rownum <= #{endRowNo}
+			)
+			where rnum >= #{startRowNo}
+		]]>
 	</select>
 	
-	<select id="selectByBno" resultType="Board">
+	<select id="count" resultType="int">
+		select count(*) from board
+	</select>
+	
+	<select id="selectByBno" parameterType="int" resultType="Board">
 		select bno, btitle, bcontent, mid, bdate, bhitcount, battachoname, battachsname, battachtype, battachdata
 		from board
 		where bno=#{bno}

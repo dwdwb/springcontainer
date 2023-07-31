@@ -8,7 +8,7 @@ import com.mycompany.springcontainer.dto.Ch13Board;
 import com.mycompany.springcontainer.dto.Ch13Pager;
 
 @Mapper
-public interface Ch13BoardDaoOld {
+public interface Ch13BoardDao {
 	//board.xml와 같은 아이디로 메소드 선언
 		public int insert(Ch13Board board);
 		public List<Ch13Board> selectByPage(Ch13Pager pager);
